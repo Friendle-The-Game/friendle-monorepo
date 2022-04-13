@@ -16,6 +16,7 @@ services:
     ports:
       - "80:80"
   api:
+    container_name: friendle-api
     env_file:
       - ./server/.env
     depends_on:
@@ -30,6 +31,7 @@ services:
     environment:
       - DATABASE_URL=${DATABASE_URL}
   client:
+    container_name: friendle-client
     env_file:
       - ./client/.env
     stdin_open: true
