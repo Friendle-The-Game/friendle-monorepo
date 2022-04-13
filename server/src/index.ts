@@ -8,7 +8,7 @@ app.use(express.json());
 
 app.get('/api/users', async (req, res) => {
   const users = await prisma.user.findMany();
-  res.json(users);
+  res.json({ users, message: 'Success' });
 });
 
 app.get('/api/user/:id/posts', async (req, res) => {
