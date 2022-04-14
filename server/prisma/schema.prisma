@@ -7,18 +7,14 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User?   @relation(fields: [authorId], references: [id])
-  authorId  Int?
+model FiveLetterWord {
+  id        Int               @id @default(autoincrement())
+  word      String            @unique
+  games     FiveLetterGame[]
 }
 
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-  posts Post[]
+model FiveLetterGame {
+  id        Int             @id @default(autoincrement())
+  word      FiveLetterWord  @relation(fields: [wordId], references: [id])
+  wordId    Int
 }

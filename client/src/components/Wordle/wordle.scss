@@ -1,0 +1,24 @@
+.squares{
+    display: flex;
+    .square {
+        width: 50px;
+        height: 50px;
+        margin: 5px;
+        background-color: white;
+        color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 32px;
+        text-transform: uppercase;
+        &.g {
+            background-color: green;
+        }
+        &.x {
+            background-color: gray;
+        }
+        &.y {
+            background-color: yellow;
+        }
+    }
+}
