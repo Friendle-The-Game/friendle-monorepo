@@ -1,20 +1,16 @@
 import React from 'react';
-import './App.css';
+import { Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './store';
+import history from './localHistory';
+import AppContainer from './AppContainer';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Friendle
-        </p>
-        <p
-        >
-          Multiplayer Wordle-like games
-        </p>
-      </header>
-    </div>
-  );
-}
+const App = () => (
+  <Provider store={store}>
+    <Router history={history}>
+      <AppContainer />
+    </Router>
+  </Provider>
+);
 
 export default App;
