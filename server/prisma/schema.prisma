@@ -7,6 +7,17 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model User {
+  id            Int         @id @default(autoincrement())
+  username      String      @unique
+  passwordHash  String
+  email         String      @unique
+  confirmed     Boolean     @default(false)
+  premium       Boolean     @default(false)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
 model FiveLetterWord {
   id        Int               @id @default(autoincrement())
   word      String            @unique
