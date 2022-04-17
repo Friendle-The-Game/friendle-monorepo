@@ -1,58 +1,27 @@
-import { FiveLetterWord, PrismaClient } from '@prisma/client';
-import axios from 'axios';
 import express from 'express';
 import cors from 'cors';
+import { apiRouter } from './apiRouter';
+import config from './config';
 
-const prisma = new PrismaClient();
+const checkEnvironmentVariables = (variables: Record<string, any>) => {
+  const {
+      NODEMAILER_HOST, NODEMAILER_PORT, NODEMAILER_USERNAME, NODEMAILER_PASSWORD, REST_API_PORT
+  } = variables;
+  if (!NODEMAILER_HOST) throw new Error('Environment variable "NODEMAILER_HOST" is missing.');
+  if (!NODEMAILER_PORT) throw new Error('Environment variable "NODEMAILER_PORT" is missing.');
+  if (!NODEMAILER_USERNAME) throw new Error('Environment variable "NODEMAILER_USERNAME" is missing.');
+  if (!NODEMAILER_PASSWORD) throw new Error('Environment variable "NODEMAILER_PASSWORD" is missing.');
+  if (!REST_API_PORT) throw new Error('Environment variable "REST_API_PORT" is missing.');
+};
+
+checkEnvironmentVariables(process.env);
+
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use('/api', apiRouter);
 
-app.post('/api/start-game', async (req, res) => {
-  const [{ id }]: FiveLetterWord[] = await prisma.$queryRaw`SELECT * FROM "FiveLetterWord" ORDER BY RANDOM() LIMIT 1;`;
-  const game = await prisma.fiveLetterGame.create({
-    data: { word: { connect: { id } } },
-  });
-  res.json({ gameId: game.id, message: 'Success' });
-});
-
-app.post('/api/check-guess', async(req, res) => {
-  const originalGuess: Array<string> = req.body.guess.split('');
-  const correct: Array<string> = await prisma.fiveLetterGame.findFirst({ where: { id: req.body.gameId }, include: { word: true } }).then((result) => result?.word.word.split('') || []);
-  const guess = [...originalGuess];
-  const correctPlaces = guess.map((g, i) => {
-    if (g === correct[i]) {
-      correct[i] = '';
-      guess[i] = '';
-      return true;
-    }
-    return false;
-  });
-  const incorrectPlaces = guess.map((g) => {
-    const correctIndex = correct.indexOf(g);
-    if (correctIndex === -1) return false;
-    correct[correctIndex] = '';
-    return true;
-  });
-  const guessWithColors = originalGuess.map((g, i) => ({ sign: g, color: correctPlaces[i] ? 'g' : incorrectPlaces[i] ? 'y' : 'x' }));
-  res.json(guessWithColors);
-});
-
-app.get('/api/update-words', async (req, res) => {
-  const allWords = await axios.get('https://raw.githubusercontent.com/dwyl/english-words/master/words_alpha.txt');
-  const wordsArray = allWords.data.split('\n').map((word: string) => word.trim()).filter((word: string) => word.length === 5);
-  const existingWords = await prisma.fiveLetterWord.findMany().then(words => words.map(({ word }) => word));
-  for (const word of wordsArray) {
-    if (existingWords.includes(word)) continue;
-    await prisma.fiveLetterWord.create({
-      data: { word },
-    });
-  };
-
-  res.json({ message: 'success' });
-});
-
-app.listen(4000, () =>
+app.listen(config.restApiPort, () =>
   console.log('Server ready at: http://localhost:4000')
 );

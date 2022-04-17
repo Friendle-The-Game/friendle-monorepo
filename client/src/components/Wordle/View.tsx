@@ -24,8 +24,8 @@ const Wordle = ({ guessLength = 5, maxGuesses = 6, actions, guesses }:
   }, [guessLength, squareGuesses, maxGuesses, guesses]);
   const handleKeyDown: any = useCallback((event: KeyboardEvent) => {
     if (currentGuess >= maxGuesses) return;
-    console.log(currentGuess, maxGuesses);
-    const { key } = event;
+    const { key, ctrlKey, altKey, metaKey } = event;
+    if (ctrlKey || altKey || metaKey) return;
     if (key === 'Enter') {
       actions.guessWordle(squareGuesses[currentGuess].join(''));
       setCurrentGuess((oldCurrentGuess) => oldCurrentGuess + 1);

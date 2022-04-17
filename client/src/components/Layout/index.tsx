@@ -5,7 +5,8 @@ import Mathler from '../Mathler';
 import Wordle from '../Wordle';
 import './layout.scss';
 
-const Layout = ({ history }: any) => (
+const Layout = ({ history }: any) => {
+  return (
   <div className="layout-wrapper">
     <div className="content">
       <Switch location={history.location}>
@@ -14,7 +15,7 @@ const Layout = ({ history }: any) => (
       </Switch>
     </div>
   </div>
-);
+)};
 
 Layout.propTypes = {
   history: PropTypes.shape({
