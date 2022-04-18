@@ -34,6 +34,7 @@ services:
       - NODEMAILER_PORT=${NODEMAILER_PORT}
       - NODEMAILER_USERNAME=${NODEMAILER_USERNAME}
       - NODEMAILER_PASSWORD=${NODEMAILER_PASSWORD}
+      - REST_API_PORT=${REST_API_PORT}
   client:
     container_name: friendle-client
     env_file:
