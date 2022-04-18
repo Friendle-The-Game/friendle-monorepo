@@ -30,6 +30,10 @@ services:
       - ./server:/app
     environment:
       - DATABASE_URL=${DATABASE_URL}
+      - NODEMAILER_HOST=${NODEMAILER_HOST}
+      - NODEMAILER_PORT=${NODEMAILER_PORT}
+      - NODEMAILER_USERNAME=${NODEMAILER_USERNAME}
+      - NODEMAILER_PASSWORD=${NODEMAILER_PASSWORD}
   client:
     container_name: friendle-client
     env_file:
