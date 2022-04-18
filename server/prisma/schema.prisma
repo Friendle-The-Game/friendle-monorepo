@@ -16,6 +16,22 @@ model User {
   premium       Boolean     @default(false)
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
+  games         Room[]
+}
+
+model Room {
+  id          Int           @id @default(autoincrement())
+  gamemode    Gamemode      @default(WORDLE)
+  players     User[]
+  results     String[]
+}
+
+enum Gamemode {
+  WORDLE
+  MATHLER
+  XORDLE
+  QUORDLE
+  DORDLE
 }
 
 model FiveLetterWord {
