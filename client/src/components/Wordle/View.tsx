@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
+import Keyboard from '../Keyboard';
 import './wordle.scss';
 
 const Wordle = ({ guessLength = 5, maxGuesses = 6, actions, guesses }:
@@ -13,7 +14,7 @@ const Wordle = ({ guessLength = 5, maxGuesses = 6, actions, guesses }:
       const squaresArray = [];
       for (let j = 0; j < guessLength; j++) {
         squaresArray.push(
-          <div className={`square ${guesses?.[i]?.[j].color}`}>
+          <div className={`square ${guesses?.[i]?.[j]?.color}`}>
             {squareGuesses[i][j] || ''}
           </div>,
         );
@@ -22,11 +23,10 @@ const Wordle = ({ guessLength = 5, maxGuesses = 6, actions, guesses }:
     }
     return guessesArray;
   }, [guessLength, squareGuesses, maxGuesses, guesses]);
-  const handleKeyDown: any = useCallback((event: KeyboardEvent) => {
+  const handleKey = useCallback((key: string) => {
     if (currentGuess >= maxGuesses) return;
-    const { key, ctrlKey, altKey, metaKey } = event;
-    if (ctrlKey || altKey || metaKey) return;
     if (key === 'Enter') {
+      if (squareGuesses[currentGuess].length !== guessLength) return;
       actions.guessWordle(squareGuesses[currentGuess].join(''));
       setCurrentGuess((oldCurrentGuess) => oldCurrentGuess + 1);
     }
@@ -44,7 +44,12 @@ const Wordle = ({ guessLength = 5, maxGuesses = 6, actions, guesses }:
         return [...oldSquareGuesses.slice(0, currentGuess), currentGuessArr, ...oldSquareGuesses.slice(currentGuess + 1, maxGuesses)];
       });
     }
-  }, [setSquareGuesses, actions, currentGuess, setCurrentGuess, guessLength, maxGuesses, squareGuesses]);
+  }, [setSquareGuesses, actions, currentGuess, maxGuesses, guessLength, setCurrentGuess, squareGuesses]);
+  const handleKeyDown = useCallback((event: KeyboardEvent) => {
+    const { key, ctrlKey, altKey, metaKey } = event;
+    if (ctrlKey || altKey || metaKey) return;
+    handleKey(key);
+  }, [handleKey]);
   useEffect(() => {
     actions.startWordle();
   }, []);
@@ -55,6 +60,7 @@ const Wordle = ({ guessLength = 5, maxGuesses = 6, actions, guesses }:
   return (
     <div className="wordle">
       {squares}
+      <Keyboard gamemode={{ name: 'WORDLE' }} guesses={guesses} onKeyPress={handleKey} />
     </div>
   );
 };
