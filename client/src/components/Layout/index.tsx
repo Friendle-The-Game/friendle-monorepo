@@ -18,8 +18,8 @@ const Layout = ({ history }: any) => {
     <Adsense
       client="ca-pub-6590154931831231"
       slot="8360483357"
-      style={{ display: 'block' }}
-      format="fluid"
+      style={{ height: '20vh' }}
+      format=""
     />
   </div>
 )};
