@@ -31,10 +31,9 @@ const Register = ({ actions }:
         </form>
       </div>
       <Adsense
-        client="ca-pub-7640562161899788"
-        slot="7259870550"
+        client="ca-pub-6590154931831231"
+        slot="8360483357"
         style={{ display: 'block' }}
-        layout="in-article"
         format="fluid"
       />
     </div>
