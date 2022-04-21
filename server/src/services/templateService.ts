@@ -24,6 +24,18 @@ const templateService = {
             isHtml: true
         });
     },
+    getFeedbackEmailTemplate: (email: string, subject: string, message: string) => ({
+        body: `
+            <div>
+            Received user feedback from ${email}.
+            <br />
+            Subject: ${subject}
+            <br />
+            Message: ${message}
+            </div>
+        `,
+        isHtml: true,
+    }),
 };
 
 export default templateService;
