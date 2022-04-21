@@ -2,6 +2,7 @@ body {
   margin: 0;
   font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
   background-color: #111;
+  overflow: hidden;
   button {
     width: 100px;
     border-radius: 16px;
@@ -25,5 +26,12 @@ body {
       width: 100%;
       margin-bottom: 2px;
       font-weight: bold;
+  }
+  .with-ads {
+    display: flex;
+    flex-direction: column;
+    .adsbygoogle {
+      height: 20vh !important;
+    }
   }
 }

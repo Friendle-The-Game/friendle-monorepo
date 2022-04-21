@@ -1,4 +1,5 @@
 import React, { FormEvent, useCallback, useMemo, useState } from 'react';
+import { Adsense } from '@ctrl/react-adsense';
 import './login.scss';
 
 const Login = ({ actions, errors }:
@@ -18,17 +19,26 @@ const Login = ({ actions, errors }:
   const { username: usernameError, password: passwordError, ...otherErrors } = errors || {};
   const displayErrors = useMemo(() => Object.values(otherErrors).map(error => <div>{error}</div>), [otherErrors]);
   return (
-    <div className="login">
-      <form className="login-form" onSubmit={handleSubmit}>
-        {displayErrors}
-        <label htmlFor="username">Username</label>
-        <input name="username" type="text" value={credentials.username} onChange={setUsername} />
-        {usernameError && <div>{usernameError}</div>}
-        <label htmlFor="password">Password</label>
-        <input name="password" type="password" value={credentials.password} onChange={setPassword} />
-        {passwordError && <div>{passwordError}</div>}
-        <button type="submit">Sign in</button>
-      </form>
+    <div className="with-ads">
+      <div className="login">
+        <form className="login-form" onSubmit={handleSubmit}>
+          {displayErrors}
+          <label htmlFor="username">Username</label>
+          <input name="username" type="text" value={credentials.username} onChange={setUsername} />
+          {usernameError && <div>{usernameError}</div>}
+          <label htmlFor="password">Password</label>
+          <input name="password" type="password" value={credentials.password} onChange={setPassword} />
+          {passwordError && <div>{passwordError}</div>}
+          <button type="submit">Sign in</button>
+        </form>
+      </div>
+      <Adsense
+        client="ca-pub-7640562161899788"
+        slot="7259870550"
+        style={{ display: 'block' }}
+        layout="in-article"
+        format="fluid"
+      />
     </div>
   );
 };
