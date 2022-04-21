@@ -13,11 +13,11 @@ apiRouter.post('/forgot-password', authController.forgotPassword);
 apiRouter.post('/reset-password', authController.resetPassword);
 
 apiRouter.post('/start-game', async (req, res) => {
-    /* const [{ id }]: FiveLetterWord[] = await prisma.$queryRaw`SELECT * FROM "FiveLetterWord" ORDER BY RANDOM() LIMIT 1;`;
+    const [{ id }]: FiveLetterWord[] = await prisma.$queryRaw`SELECT * FROM "FiveLetterWord" ORDER BY RANDOM() LIMIT 1;`;
     const game = await prisma.fiveLetterGame.create({
       data: { word: { connect: { id } } },
     });
-    res.json({ gameId: game.id, message: 'Success' }); */
+    res.json({ gameId: game.id, message: 'Success' });
   });
 
 apiRouter.post('/check-guess', async(req, res) => {

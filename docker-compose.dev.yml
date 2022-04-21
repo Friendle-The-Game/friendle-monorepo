@@ -6,6 +6,16 @@ services:
     image: "postgres:latest"
     environment:
       - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    command: certonly --webroot --webroot-path=/var/www/html --email info@friendle.xyz  --agree-tos --no-eff-email -d friendle.xyz
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - web-root:/var/www/html
+    depends_on:
+      - nginx
   nginx:
     depends_on:
       - api
@@ -15,6 +25,10 @@ services:
       context: ./nginx
     ports:
       - "80:80"
+    volumes:
+      - web-root:/var/www/html
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
   api:
     container_name: friendle-api
     env_file:
@@ -48,3 +62,7 @@ services:
     volumes:
       - /app/node_modules
       - ./client:/app
+volumes:
+  web-root:
+  certbot-etc:
+  certbot-var:
