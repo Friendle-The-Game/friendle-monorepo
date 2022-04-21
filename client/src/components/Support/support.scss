@@ -1,0 +1,12 @@
+.support {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    .support-form {
+        width: 400px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}

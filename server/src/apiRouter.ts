@@ -2,6 +2,7 @@ import { Router } from "express";
 import { FiveLetterWord, PrismaClient } from '@prisma/client';
 import axios from 'axios';
 import authController from './controllers/authController';
+import feedbackController from './controllers/feedbackController';
 
 export const apiRouter = Router();
 const prisma = new PrismaClient();
@@ -11,6 +12,8 @@ apiRouter.post('/login', authController.login);
 apiRouter.post('/confirm-registration', authController.confirmRegistration);
 apiRouter.post('/forgot-password', authController.forgotPassword);
 apiRouter.post('/reset-password', authController.resetPassword);
+
+apiRouter.post('/send-feedback', feedbackController.handleFeedback)
 
 apiRouter.post('/start-game', async (req, res) => {
     const [{ id }]: FiveLetterWord[] = await prisma.$queryRaw`SELECT * FROM "FiveLetterWord" ORDER BY RANDOM() LIMIT 1;`;
