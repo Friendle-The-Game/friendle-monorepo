@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { MdKeyboardBackspace as Backspace, MdKeyboardReturn as Enter } from 'react-icons/md';
+import { MdKeyboardBackspace, MdKeyboardReturn } from 'react-icons/md';
 import './keyboard.scss';
 
 const keyboardLayout = [
@@ -27,8 +27,8 @@ const getKeyboardLayout = (gamemode: { name: string, includeParentheses?: boolea
 };
 
 const keyboardIcons = {
-    Backspace: <Backspace />,
-    Enter: <Enter />
+    Backspace: <MdKeyboardBackspace />,
+    Enter: <MdKeyboardReturn />
 };
 
 type KeyboardProps = {
