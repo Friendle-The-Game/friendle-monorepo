@@ -37,7 +37,7 @@ Run this from root in two separate terminals:
 
 Install docker and docker-compose on the machine and then run
 
-`docker-compose up --build`
+`docker-compose -f docker-compose.dev.yml up --build`
 
 You can add a optional parameter `-d` for running containers in background.
 
