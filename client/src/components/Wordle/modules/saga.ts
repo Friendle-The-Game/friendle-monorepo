@@ -12,26 +12,30 @@ import {
   } from './actions';
 import axios from 'axios';
 import { selectGameId } from './selectors';
+
+import io from 'socket.io-client';
+
+let socket:any;
+let gameID:number = -1;
+
   
-  function * startWordle() {
-    try {
-      const { data: { gameId } }:
-      { data: { gameId: number } } = yield axios.post(`${process.env.REACT_APP_API_URL}/start-game`);
-      yield put(setGameId(gameId));
-    } catch (e) {
-        // todo: error handling
-    }
+  function startWordle() {
+    socket = io("localhost:4000");
+    socket.on('connect', () => { 
+      socket.emit("room:create")
+    });
+    socket.on('room:created', (roomID:number) => {
+      put(setGameId(roomID))  
+      gameID = roomID
+    });
+    socket.on('game:guessed', (guessWithColors:any) => {
+    });
   }
   
-  function * guessWordle(action: AnyAction) {
-    try {
-      const gameId: number = yield select(selectGameId);
-      const { data }:
-      { data: any[] } = yield axios.post(`${process.env.REACT_APP_API_URL}/check-guess`, { guess: action.payload.word, gameId });
-      yield put(addGuess(data));
-    } catch (e) {
-        // todo: error handling
-    }
+  function  guessWordle(action: AnyAction) {
+    if (gameID === -1)return
+
+    socket.emit("game:guess", {body: { guess: action.payload.word, gameID }})
   }
   
   export default function * warningsSaga() {
