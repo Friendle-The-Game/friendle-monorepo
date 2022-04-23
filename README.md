@@ -6,6 +6,11 @@ Friendle is a game that features multiplayer wordle-like puzzles.
 
 ## How to run locally
 
+### Environment variables
+
+You'll have to add all required environment variables to /server/.env and /client/.env(.local). Required environment variables are listed in
+/server/.env.example and /client/.env.example.
+
 ### Dependencies
 
 Run this from root if you haven't installed the dependencies already:
