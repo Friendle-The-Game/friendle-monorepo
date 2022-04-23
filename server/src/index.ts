@@ -26,7 +26,7 @@ app.use('/api', apiRouter);
 
 const server = require('http').createServer(app);
 server.listen(config.restApiPort, () =>
-console.log('Server ready at: http://localhost:4000')
+  console.log('Server ready at: http://localhost:4000')
 );
 
 
@@ -35,7 +35,7 @@ const io = new Server(server, {
     origin: '*',
   }
 });
-const onConnection = (socket:any) => {
+const onConnection = (socket: any) => {
   handleSocket(io, socket);
 }
 io.on("connection", onConnection)
