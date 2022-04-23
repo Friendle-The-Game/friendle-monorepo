@@ -9,7 +9,7 @@ Friendle is a game that features multiplayer wordle-like puzzles.
 ### Environment variables
 
 You'll have to add all required environment variables to /server/.env and /client/.env(.local). Required environment variables are listed in
-/server/.env.example and /client/.env.example.
+/server/.env.example and /client/.env.example. If you need help with setting up any of the environemnt variables, please contact [@Ammko128](https://github.com/Ammko128) or [@JasminDudic1](https://github.com/JasminDudic1).
 
 ### Dependencies
 
