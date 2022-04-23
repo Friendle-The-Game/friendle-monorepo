@@ -9,7 +9,7 @@ const gameService: ServiceType = {
         const game = await prisma.fiveLetterGame.create({
           data: { word: { connect: { id } } },
         });
-        return({data: { gameId: game.id, message: 'Success' } });
+        return({ data: { gameId: game.id, message: 'Success' } });
     },
     checkGuess: async (req) => {
         const originalGuess: Array<string> = req.body.guess.split('');
