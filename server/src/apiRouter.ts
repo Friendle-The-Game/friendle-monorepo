@@ -57,5 +57,38 @@ apiRouter.get('/update-words', async (req, res) => {
       });
     };
   
-    res.json({ message: 'success' });
-  });
+  res.json({ message: 'success' });
+});
+
+apiRouter.get('/get-words', async (req, res) => {
+  const allWords = await axios.get('https://raw.githubusercontent.com/dwyl/english-words/master/words_alpha.txt');
+  const wordsArray = allWords.data.split('\n').map((word: string) => word.trim()).filter((word: string) => word.length === 5);
+  let counter = 0;
+  for (let i = 0; i < wordsArray.length - 1; i++) {
+    for (let j = i + 1; j < wordsArray.length; j++) {
+      if (wordsArray[i].split('').some((letter: string) => wordsArray[j].includes(letter))) continue;
+      console.log(wordsArray[i], wordsArray[j]);
+      counter++;
+    }
+    if (counter > 1000000) break;
+  }
+  console.log(counter);
+
+  res.json({ message: 'success' });
+});
+
+apiRouter.get('/count-words', async (req, res) => {
+  const allWords = await axios.get('https://raw.githubusercontent.com/dwyl/english-words/master/words_alpha.txt');
+  const wordsArray = allWords.data.split('\n').map((word: string) => word.trim()).filter((word: string) => word.length >= 4 && word.length <= 7);
+  const fourCount = wordsArray.filter((word: string) => word.length === 4).length;
+  const fiveCount = wordsArray.filter((word: string) => word.length === 5).length;
+  const sixCount = wordsArray.filter((word: string) => word.length === 6).length;
+  const sevenCount = wordsArray.filter((word: string) => word.length === 7).length;
+  console.log(4, fourCount);
+  console.log(5, fiveCount);
+  console.log(6, sixCount);
+  console.log(7, sevenCount);
+  console.log('total', wordsArray.length)
+
+  res.json({ message: 'success' });
+});

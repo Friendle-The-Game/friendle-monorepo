@@ -4,6 +4,12 @@ body {
   background-color: #111;
   overflow: hidden;
   color: #ccc;
+  .app-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
   button {
     width: 100px;
     border-radius: 16px;
