@@ -4,6 +4,10 @@ body {
   background-color: #111;
   overflow: hidden;
   color: #ccc;
+  *::selection {
+    color: #111;
+    background-color: #090;
+  }
   .app-wrapper {
     display: flex;
     flex-direction: column;

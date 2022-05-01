@@ -6,9 +6,10 @@ import './home.scss';
 const gamemodes = [
     'WORDLE',
     'MATHLER',
-    'QUORDLE',
-    'DORDLE',
-    'XORDLE'
+    'COLORLER',
+    'XORDLE',
+    'CRYPTLE',
+    'INVERSLE'
 ];
 
 type HomeProps = {
