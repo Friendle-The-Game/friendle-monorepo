@@ -28,6 +28,15 @@ const emailService = {
         const { body, isHtml } = templateService.getConfirmationEmailTemplate(email, username);
         await sendEmail(`Friendle <${config.nodemailerUsername}>`, email, subject, body, isHtml);
     },
+    sendFeedbackEmail: async (email: string, subject: string, message: string) => {
+        const { body, isHtml } = templateService.getFeedbackEmailTemplate(email, subject, message);
+        try {
+            await sendEmail(config.nodemailerUsername, config.nodemailerUsername, subject, body, isHtml);
+            return { data: 'Success' };
+        } catch (error) {
+            return { error };
+        }
+    }
 }
 
 export default emailService;

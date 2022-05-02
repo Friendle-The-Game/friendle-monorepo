@@ -1,0 +1,29 @@
+.home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 80%;
+    margin: auto;
+    height: 100vh;
+    font-size: 32px;
+    .gamemodes {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 20px;
+        .gamemode {
+            border: solid 4px #ccc;
+            width: 192px;
+            height: 108px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &:hover {
+                color: #090;
+                border-color: #090;
+            }
+        }
+    }
+}
