@@ -12,7 +12,7 @@ import ConfirmRegistration from './components/ConfirmRegistration';
 
 const AppContainer = ({ history }: any) => (
   <div className="app-wrapper">
-    <img src="/friendle-logo.png" alt="FRIENDLE" width={192 * 2} height={29.2 * 2} />
+    <img src="/friendle-logo.svg" alt="FRIENDLE" width={192 * 2} height={29.2 * 2} />
     <Switch location={history.location}>
       <Route path="/login" exact component={Login} />
       <Route path="/register" exact component={Register} />
