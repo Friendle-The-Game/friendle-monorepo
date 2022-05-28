@@ -20,12 +20,17 @@ type HomeProps = {
 
 const Home = ({ actions }: HomeProps) => {
     const [hiddenImages, setHiddenImages] = useState<Record<string, boolean>>({});
+    const [loadedImages, setLoadedImages] = useState<Record<string, boolean>>({});
     const [gameCode, setGameCode] = useState('');
     const handleGameCodeChange = useCallback(({ target }: { target: HTMLInputElement }) => {
         setGameCode(target.value);
     }, []);
     const handleBrokenImage = useCallback((gamemode: string) => () => {
         setHiddenImages((hiddenImages) => ({ ...hiddenImages, [gamemode]: true }));
+    }, []);
+    const handleLoadedImage = useCallback((gamemode: string) => () => {
+        console.log(gamemode);
+        setLoadedImages((loadedImages) => ({ ...loadedImages, [gamemode]: true }));
     }, []);
     const joinGame = useCallback(() => {
         actions.joinGame(gameCode);
@@ -37,9 +42,18 @@ const Home = ({ actions }: HomeProps) => {
         return (<div key={gamemode} onClick={startNewGame(gamemode)} className={`${gamemode} gamemode`}>
             {
             !hiddenImages[gamemode]
-                ? <img src={`/assets/${gamemode}`} onError={handleBrokenImage(gamemode)} alt={gamemode} />
+                ? (
+                    <img
+                        src={`/assets/${gamemode}`}
+                        className={!loadedImages[gamemode] ? 'hidden' : ''}
+                        onLoad={handleLoadedImage(gamemode)}
+                        onError={handleBrokenImage(gamemode)}
+                        alt={gamemode}
+                    />
+                )
                 : gamemode
             }
+            {!loadedImages[gamemode] && !hiddenImages[gamemode] && gamemode}
         </div>)
     });
 
