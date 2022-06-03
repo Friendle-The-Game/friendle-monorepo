@@ -3,6 +3,7 @@ export const types = {
     GUESS_WORDLE: 'GUESS_WORDLE',
     SET_GAME_ID: 'SET_GAME_ID',
     ADD_GUESS: 'ADD_GUESS',
+    HANDLE_NEW_MESSAGE: 'HANDLE_NEW_MESSAGE',
 };
 
 export const startWordle = () => ({
@@ -22,4 +23,9 @@ export const setGameId = (gameId: number) => ({
 export const addGuess = (guesses: Array<any>) => ({
     type: types.ADD_GUESS,
     payload: { guesses },
+});
+
+export const handleNewMessage = (message: any) => ({
+    type: types.HANDLE_NEW_MESSAGE,
+    payload: { message },
 });

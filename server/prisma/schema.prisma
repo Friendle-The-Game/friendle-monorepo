@@ -20,10 +20,22 @@ model User {
 }
 
 model Room {
+  id            Int           @id @default(autoincrement())
+  gamemode      Gamemode      @default(WORDLE)
+  players       User[]
+  results       String[]
+  started       Boolean       @default(false)
+  finished      Boolean       @default(false)
+  roomSettings  RoomSetting
+}
+
+model RoomSetting {
   id          Int           @id @default(autoincrement())
-  gamemode    Gamemode      @default(WORDLE)
-  players     User[]
-  results     String[]
+  roomId      Int
+  room        Room          @relation(fields: [roomId], references: [id])
+  maxGuesses  Int
+  maxPlayers  Int
+  length      Int
 }
 
 enum Gamemode {
@@ -34,14 +46,42 @@ enum Gamemode {
   DORDLE
 }
 
-model FiveLetterWord {
-  id        Int               @id @default(autoincrement())
-  word      String            @unique
-  games     FiveLetterGame[]
+model GamemodeStatistics {
+  id          Int           @id @default(autoincrement())
+  timesPlayed Int           @default(0)
+  gamemode    Gamemode
 }
 
-model FiveLetterGame {
-  id        Int             @id @default(autoincrement())
-  word      FiveLetterWord  @relation(fields: [wordId], references: [id])
-  wordId    Int
+model Word {
+  id          Int       @id @default(autoincrement())
+  word        String    @unique
+  length      Int
 }
+
+model XordleWord {
+  id          Int       @id @default(autoincrement())
+  word1       String
+  word2       String
+  length      Int
+
+  @@unique([word1, word2])
+}
+
+model MathExpression {
+  id          Int       @id @default(autoincrement())
+  expression  String    @unique
+  result      Int
+  length      Int
+}
+
+// model FiveLetterWord {
+//   id        Int               @id @default(autoincrement())
+//   word      String            @unique
+//   games     FiveLetterGame[]
+// }
+
+// model FiveLetterGame {
+//   id        Int             @id @default(autoincrement())
+//   word      FiveLetterWord  @relation(fields: [wordId], references: [id])
+//   wordId    Int
+// }

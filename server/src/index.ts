@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import { apiRouter } from './apiRouter';
 import config from './config';
+import handleSocket from './sockets/socketHandler'
+import { Server } from "socket.io";
 
 const checkEnvironmentVariables = (variables: Record<string, any>) => {
   const {
@@ -22,6 +24,26 @@ app.use(cors());
 app.use(express.json());
 app.use('/api', apiRouter);
 
-app.listen(config.restApiPort, () =>
+const server = require('http').createServer(app);
+server.listen(config.restApiPort, () =>
   console.log('Server ready at: http://localhost:4000')
 );
+
+
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+  }
+});
+const onConnection = (socket: any) => {
+  handleSocket(io, socket);
+}
+io.on("connection", onConnection)
+
+
+
+/*
+const io = require('socket.io')(server);
+
+io.on("connection", onConnection)
+*/
